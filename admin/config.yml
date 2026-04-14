@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: your-github-username/your-repo-name # Replace with your GitHub repository (e.g., username/accounting-website)
+  repo: https://github.com/wincy0825/TNTCPA.git # Replace with your GitHub repository (e.g., username/accounting-website)
   branch: main # Branch to update (e.g., main or master)
 
 # This allows saving drafts before publishing
