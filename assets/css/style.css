@@ -912,33 +912,23 @@ img {
 /* ============================================================
    Responsive Design
    ============================================================ */
-@media (max-width: 768px) /* 在 @media (max-width: 768px) 區塊內加入或確認以下內容 */
+@media (max-width: 768px) {
+  .navbar-inner {
+    height: 64px;
+    gap: 20px;
+  }
 
-.navbar-hamburger {
-  display: flex;  /* 確保手機版顯示漢堡圖示 */
-}
+  .navbar-nav {
+    display: none;
+  }
 
-.navbar-nav {
-  display: none;  /* 預設隱藏選單 */
-}
+  .navbar-hamburger {
+    display: flex;
+  }
 
-.navbar-nav.open {
-  display: flex;  /* 點擊後顯示選單 */
-  flex-direction: column;
-  position: absolute;
-  top: 64px;
-  left: 0;
-  right: 0;
-  background: #001f3f;
-  padding: 20px;
-  z-index: 100;
-}
-
-/* 確保語言切換按鈕在手機版也顯示（但保持在原有位置，不要移動） */
-.lang-switcher {
-  display: flex;  /* 原本可能被隱藏，改為顯示 */
-  margin-left: auto; /* 保持靠右 */
-}
+  .lang-switcher {
+    display: none;
+  }
 
   .about-grid {
     grid-template-columns: 1fr;
