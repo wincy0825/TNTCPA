@@ -35,27 +35,32 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /**
+ * Get the base path of the site (e.g., /TNTCPA/ or empty string)
+ * Works for both domain root and GitHub Pages project pages
+ */
+function getBasePath() {
+  const path = window.location.pathname;
+  // Match pattern like /TNTCPA/ or /anything/
+  const match = path.match(/^\/[^\/]+\//);
+  if (match && !match[0].includes("en") && !match[0].includes(".html")) {
+    return match[0];
+  }
+  return "/";
+}
+
+/**
  * Switch language and navigate to the corresponding page
- * Works correctly on domain root, subfolders, GitHub Pages, and Netlify
  */
 function switchLanguage(lang) {
-  // Save language preference to localStorage
   localStorage.setItem("preferred-language", lang);
 
-  // Get current pathname
+  const basePath = getBasePath();
   let currentPath = window.location.pathname;
 
-  // Detect base path (e.g., /repository-name/ if not at domain root)
-  let basePath = "";
-  const match = currentPath.match(/^(\/[^\/]+)\//);
-  if (match && !match[1].includes("en") && !match[1].includes(".html")) {
-    basePath = match[1];
-  }
-
-  // Remove base path from currentPath for processing
+  // Remove basePath from currentPath for processing
   let pathWithoutBase = currentPath;
-  if (basePath && currentPath.startsWith(basePath)) {
-    pathWithoutBase = currentPath.substring(basePath.length);
+  if (basePath !== "/" && currentPath.startsWith(basePath)) {
+    pathWithoutBase = currentPath.substring(basePath.length - 1);
   }
 
   // Determine if currently on English version
@@ -82,12 +87,13 @@ function switchLanguage(lang) {
   // Build new path
   let newPath;
   if (lang === "en") {
-    newPath = basePath + "/en/" + pageName;
+    newPath = basePath + "en/" + pageName;
   } else {
-    newPath = basePath + "/" + pageName;
+    newPath = basePath + pageName;
   }
 
-  // Navigate to the new language version
+  // Ensure double slashes don't occur
+  newPath = newPath.replace(/\/\//g, "/");
   window.location.href = newPath;
 }
 
@@ -98,18 +104,12 @@ function updateLanguageSwitcherState() {
   const langSwitcher = document.querySelector(".lang-switcher");
   if (!langSwitcher) return;
 
+  const basePath = getBasePath();
   let currentPath = window.location.pathname;
 
-  // Detect base path
-  let basePath = "";
-  const match = currentPath.match(/^(\/[^\/]+)\//);
-  if (match && !match[1].includes("en") && !match[1].includes(".html")) {
-    basePath = match[1];
-  }
-
   let pathWithoutBase = currentPath;
-  if (basePath && currentPath.startsWith(basePath)) {
-    pathWithoutBase = currentPath.substring(basePath.length);
+  if (basePath !== "/" && currentPath.startsWith(basePath)) {
+    pathWithoutBase = currentPath.substring(basePath.length - 1);
   }
 
   const currentLang = pathWithoutBase.startsWith("/en/") ? "en" : "zh";
