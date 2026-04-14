@@ -1,5 +1,5 @@
 // ============================================================
-// 网站交互脚本：移动端菜单、语言切换（基于 pathname 替换）
+// 网站交互脚本：移动端菜单、语言切换（基于 pathname 替换，可靠版）
 // ============================================================
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -39,11 +39,15 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function switchLanguage(lang) {
-  // 获取当前路径，例如：/index.html 或 /en/index.html 或 /ttcpahk/index.html 或 /ttcpahk/en/index.html
-  let currentPath = window.location.pathname;
+  let path = window.location.pathname; // 例如 /, /index.html, /en/index.html, /ttcpahk/index.html, /ttcpahk/en/index.html
   
-  // 判断是否在英文页面（路径中包含 /en/）
-  const isEnglish = currentPath.includes("/en/");
+  // 如果路径为空或只有斜杠，补充默认文件名
+  if (path === "" || path === "/") {
+    path = "/index.html";
+  }
+  
+  // 判断是否在英文页面
+  const isEnglish = path.includes("/en/");
   
   // 如果已经在目标语言，只更新按钮样式
   if ((lang === "en" && isEnglish) || (lang === "zh" && !isEnglish)) {
@@ -54,39 +58,27 @@ function switchLanguage(lang) {
   let newPath = "";
   
   if (lang === "en") {
-    // 切换到英文：在路径中合适的位置插入 /en/
-    // 例如：/index.html -> /en/index.html
-    // 例如：/ttcpahk/index.html -> /ttcpahk/en/index.html
-    // 找到第一个斜杠后的位置（如果路径以 / 开头）
-    const firstSlash = currentPath.indexOf("/");
-    if (firstSlash === 0) {
-      // 路径以 / 开头，我们在根后面插入 en/
-      // 需要找到第二个斜杠的位置，但简单起见，在第一个字符后插入 "en/"
-      // 但要注意如果路径是 /index.html，插入后应为 /en/index.html
-      // 更通用的方法：将路径分成两部分：根路径和剩余部分
-      const parts = currentPath.split("/");
-      // parts[0] 是空字符串（因为以 / 开头），parts[1] 可能是空或者仓库名
-      if (parts.length >= 2 && parts[1] !== "" && parts[1] !== "en") {
-        // 有子路径（如 ttcpahk），需要在子路径后面插入 en
-        // 例如 ["", "ttcpahk", "index.html"] -> 插入 "en" 后变成 ["", "ttcpahk", "en", "index.html"]
-        parts.splice(2, 0, "en");
-      } else {
-        // 没有子路径，直接在根后面插入 en
-        parts.splice(1, 0, "en");
-      }
-      newPath = parts.join("/");
-    } else {
-      // 相对路径（理论上不会出现），直接加 en/
-      newPath = "en/" + currentPath;
+    // 切换到英文：在路径的第一个斜杠后（或第一个目录后）插入 en/
+    // 将路径按 / 分割成数组
+    let parts = path.split("/");
+    // parts[0] 通常是空字符串（因为路径以 / 开头）
+    // 找到第一个非空的段（可能是仓库名或直接就是文件名）
+    let insertIndex = 1;
+    // 如果第一个非空段不是 en 也不是文件名（即不是 .html 结尾），则认为是子路径（如 ttcpahk），需要在它后面插入 en
+    if (parts.length > 2 && parts[1] !== "" && !parts[1].endsWith(".html") && parts[1] !== "en") {
+      insertIndex = 2;
     }
+    // 插入 "en"
+    parts.splice(insertIndex, 0, "en");
+    newPath = parts.join("/");
   } else {
-    // 切换到中文：移除路径中的 /en/
-    newPath = currentPath.replace("/en/", "/");
+    // 切换到中文：移除路径中的 /en/ 段
+    newPath = path.replace("/en/", "/");
   }
   
   // 清理多余的斜杠
   newPath = newPath.replace(/\/\/+/g, "/");
-  // 确保以 / 开头（相对路径）
+  // 确保以 / 开头
   if (!newPath.startsWith("/")) {
     newPath = "/" + newPath;
   }
