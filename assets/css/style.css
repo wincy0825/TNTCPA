@@ -920,12 +920,12 @@ img {
     position: relative;
   }
 
-  /* 隱藏頂欄原本的語言切換器 */
+  /* Hide top language switcher on mobile */
   .lang-switcher {
     display: none !important;
   }
 
-  /* 顯示漢堡圖示 */
+  /* Show hamburger icon */
   .navbar-hamburger {
     display: flex !important;
     flex-direction: column;
@@ -942,7 +942,7 @@ img {
     border-radius: 2px;
   }
 
-  /* 導航選單預設隱藏 */
+  /* Hidden navigation menu */
   .navbar-nav {
     display: none;
     position: absolute;
@@ -956,13 +956,9 @@ img {
     z-index: 100;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
-
-  /* 點擊後顯示 */
   .navbar-nav.open {
     display: flex;
   }
-
-  /* 選單內連結樣式 */
   .navbar-nav a {
     padding: 12px 16px;
     font-size: 16px;
@@ -973,7 +969,7 @@ img {
     display: none;
   }
 
-  /* 由 JS 動態加入的語言切換器樣式（放在選單底部） */
+  /* Mobile language switcher inside menu (added by JS) */
   .navbar-nav .lang-switcher-mobile {
     display: flex;
     justify-content: center;
@@ -991,7 +987,24 @@ img {
     color: #fff;
   }
 
-  /* 以下保留您原有的其他響應式規則 */
+  /* ===== NEW FOOTER RULES FOR MOBILE ===== */
+  /* Hide the three footer columns (Quick Links, Main Services, Contact Info) */
+  .footer-grid .footer-col {
+    display: none;
+  }
+  /* Keep the brand/description column */
+  .footer-grid .footer-brand {
+    display: flex;   /* or block, as originally */
+    margin-bottom: 20px;
+  }
+  /* Ensure copyright line stays visible and properly spaced */
+  .footer-bottom {
+    margin-top: 20px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* All your existing responsive rules below remain unchanged */
   .about-grid {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -1008,12 +1021,10 @@ img {
     gap: 40px;
   }
   .footer-grid {
+    /* Keep grid but we've hidden .footer-col, .footer-brand remains */
+    display: grid;
     grid-template-columns: 1fr;
     gap: 32px;
-  }
-  .footer-bottom {
-    flex-direction: column;
-    gap: 12px;
   }
   .btn-outline {
     margin-left: 0;
