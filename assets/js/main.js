@@ -1,4 +1,4 @@
-// Mobile hamburger menu toggle
+/// Mobile hamburger menu toggle
 document.addEventListener("DOMContentLoaded", function () {
   const hamburger = document.querySelector(".navbar-hamburger");
   const nav = document.querySelector(".navbar-nav");
@@ -9,11 +9,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Mark active nav link based on current page
-  const currentPage = window.location.pathname.split("/").pop() || "index.html";
+  // Mark active nav link based on current page (considering base path)
+  const currentPath = window.location.pathname;
+  // Extract the part after /TNTCPA/ (or just use the full path)
+  let currentPage = currentPath.split('/').pop() || "index.html";
   document.querySelectorAll(".navbar-nav a").forEach(function (link) {
     const href = link.getAttribute("href");
-    if (href === currentPage || (currentPage === "" && href === "index.html")) {
+    if (href && (href === currentPage || href === currentPath || href.endsWith(currentPage))) {
       link.classList.add("active");
     }
   });
@@ -36,76 +38,43 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /**
  * Switch language and navigate to the corresponding page
- * Works with /tc/ (Chinese) and /en/ (English) directory structure
- * Handles both Netlify deployment and local development
+ * Works with subdirectory base path /TNTCPA/
  */
 function switchLanguage(lang) {
-  // Save language preference to localStorage
   localStorage.setItem("preferred-language", lang);
 
-  // Get current pathname
-  const currentPath = window.location.pathname;
-  
-  // Determine if currently on English or Chinese version
-  const isEnglish = currentPath.includes("/en/");
-  const isChinese = currentPath.includes("/tc/");
-  
-  // If already on the target language, just update switcher state
-  if ((lang === "en" && isEnglish) || (lang === "zh" && isChinese)) {
-    updateLanguageSwitcherState();
-    return;
-  }
+  const basePath = '/TNTCPA';
+  let currentPath = window.location.pathname;
 
-  // Extract the page name from the current path
-  // Handle cases like:
-  // - /tc/index.html -> index.html
-  // - /tc/services.html -> services.html
-  // - /tc/contact.html -> contact.html
-  // - /en/index.html -> index.html
-  // - /en/services.html -> services.html
-  // - /en/contact.html -> contact.html
-  // - /tc/ -> index.html
-  // - /en/ -> index.html
-  
-  let pathSegments = currentPath.split("/").filter(segment => segment && segment !== "tc" && segment !== "en");
-  let pageName = pathSegments[pathSegments.length - 1] || "index.html";
-  
-  // Ensure pageName has .html extension
-  if (pageName && !pageName.endsWith(".html")) {
-    pageName = pageName + ".html";
-  }
-  
-  // If pageName is empty or just a domain, default to index.html
-  if (!pageName || pageName === ".html") {
-    pageName = "index.html";
-  }
+  // Remove basePath from currentPath if present
+  let relativePath = currentPath.replace(basePath, '');
+  if (relativePath === '') relativePath = '/tc/index.html'; // fallback
 
-  // Construct the new path based on target language
-  let newPath = "";
-  if (lang === "en") {
-    // Switch to English version
-    newPath = "/en/" + pageName;
+  // Determine current language and target page
+  let targetPath = '';
+  if (lang === 'en') {
+    targetPath = relativePath.replace('/tc/', '/en/');
   } else {
-    // Switch to Chinese version
-    newPath = "/tc/" + pageName;
+    targetPath = relativePath.replace('/en/', '/tc/');
   }
 
-  // Navigate to the new language version
-  window.location.href = newPath;
+  // If no language prefix in path, assume we are at root or default to index
+  if (!targetPath.includes('/en/') && !targetPath.includes('/tc/')) {
+    targetPath = lang === 'en' ? '/en/index.html' : '/tc/index.html';
+  }
+
+  // Ensure the path starts with basePath
+  let newUrl = basePath + targetPath;
+  window.location.href = newUrl;
 }
 
 /**
  * Update the language switcher active state based on current page
  */
 function updateLanguageSwitcherState() {
-  const langSwitcher = document.querySelector(".lang-switcher");
-  if (!langSwitcher) return;
-
-  // Determine current language from pathname
   const currentPath = window.location.pathname;
-  const currentLang = currentPath.includes("/en/") ? "en" : "zh";
+  const currentLang = currentPath.includes('/en/') ? 'en' : 'zh';
 
-  // Update active state for all language switcher links
   document.querySelectorAll(".lang-switcher a").forEach(function (link) {
     const lang = link.getAttribute("data-lang");
     if (lang === currentLang) {
