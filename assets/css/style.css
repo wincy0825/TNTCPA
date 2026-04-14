@@ -282,21 +282,24 @@ img {
 }
 
 .btn-outline {
-  background: #0066cc;
+   background: #0066cc;
   color: #fff;
   border-color: #0066cc;
-  margin-left: 12px;
+  box-shadow: 0 4px 12px rgba(0,102,204,0.25)
 }
 
 .btn-outline:hover {
   background: #0052a3;
   border-color: #0052a3;
   transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,102,204,0.35);
 }
 
 .btn-outline:active {
   transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0,102,204,0.2);
 }
+
 /* ============================================================
    Section Shared
    ============================================================ */
