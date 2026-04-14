@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>联系我们 - 卓信会计师事务所</title>
+  <meta name="description" content="联系卓信会计师事务所，获取专业的会计、审计及税务咨询服务。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="/tc/index.html" class="navbar-brand">
+        <img id="navbar-logo" src="../assets/images/default-logo.png" alt="Logo" class="navbar-logo-img" style="display:none;" />
+        <div class="brand-icon" id="brand-icon-fallback">卓</div>
+        <div class="brand-name">
+          <span id="brand-name-text">卓信会计师事务所</span>
+          <span id="brand-tagline">Zhuoxin & Co. CPA</span>
+        </div>
+      </a>
+      <ul class="navbar-nav">
+        <li><a href="/tc/index.html">首页</a></li>
+        <li><a href="/tc/about.html">关于我们</a></li>
+        <li><a href="/tc/services.html">服务</a></li>
+        <li><a href="/tc/contact.html" class="active">联系我们</a></li>
+      </ul>
+      <ul class="lang-switcher">
+        <li><a href="/en/contact.html" data-lang="zh" class="active">中文</a></li>
+        <li><a href="/en/contact.html" data-lang="en">English</a></li>
+      </ul>
+      <div class="navbar-hamburger" aria-label="菜单" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== PAGE HERO ===== -->
+  <section class="page-hero">
+    <div class="breadcrumb">
+      <a href="/tc/index.html">首页</a>
+      <span>/</span>
+      <span>联系我们</span>
+    </div>
+    <h1>联系我们</h1>
+    <p>我们的专业团队随时为您服务。欢迎通过以下方式联系我们。</p>
+  </section>
+
+  <!-- ===== CONTACT MAIN ===== -->
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Contact Info -->
+        <div class="contact-info">
+          <h2>联系方式</h2>
+          <p class="lead">无论您对会计、审计或税务有任何疑问，我们的专业团队都乐意为您解答，并提供免费初步咨询。</p>
+
+          <div class="contact-item">
+            <div class="ci-icon">📞</div>
+            <div class="ci-text">
+              <strong>电话</strong>
+              <a href="tel:+85212345678" id="contact-phone">(852) 1234-5678</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">📠</div>
+            <div class="ci-text">
+              <strong>传真</strong>
+              <span>(852) 1234-5679</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">✉️</div>
+            <div class="ci-text">
+              <strong>邮箱</strong>
+              <a href="mailto:info@zhuoxincpa.com" id="contact-email">info@zhuoxincpa.com</a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">💬</div>
+            <div class="ci-text">
+              <strong>WhatsApp</strong>
+              <a href="https://wa.me/85212345678" id="contact-whatsapp" target="_blank" rel="noopener">
+                点击发送 WhatsApp 消息
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">📍</div>
+            <div class="ci-text">
+              <strong>办公地址</strong>
+              <span>香港中环皇后大道中100号<br />XX商业大厦18楼1801室</span>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="ci-icon">🕐</div>
+            <div class="ci-text">
+              <strong>办公时间</strong>
+              <span>周一至周五: 09:00 – 18:00<br />周六: 10:00 – 13:00 (敬请预约)</span>
+            </div>
+          </div>
+
+          <!-- Google Map -->
+          <div id="google-map" class="google-map-container">
+            <iframe id="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3691.5264763597946!2d114.14840631533698!3d22.283212385317328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3404007d3e7d0001%3A0x1234567890abcdef!2z5riv5rW36aKo5paw5ZWG6L%2B65Lit5aSa5Y2A5LqM5qWt5LqM5qWt!5e0!3m2!1sen!2shk!4v1234567890" width="100%" height="300" style="border:0; border-radius:12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+
+        <!-- Enquiry Form -->
+        <div class="contact-form-box">
+          <h3>发送查询</h3>
+          <form id="enquiry-form" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+              <label for="name">姓名 *</label>
+              <input type="text" id="name" name="name" placeholder="请输入您的姓名" required />
+            </div>
+            <div class="form-group">
+              <label for="company">公司名称</label>
+              <input type="text" id="company" name="company" placeholder="请输入公司名称 (可选)" />
+            </div>
+            <div class="form-group">
+              <label for="email">邮箱 *</label>
+              <input type="email" id="email" name="email" placeholder="请输入您的邮箱地址" required />
+            </div>
+            <div class="form-group">
+              <label for="phone">电话号码</label>
+              <input type="tel" id="phone" name="phone" placeholder="请输入您的电话号码" />
+            </div>
+            <div class="form-group">
+              <label for="service">查询类型</label>
+              <select id="service" name="service">
+                <option value="">— 请选择查询类型 —</option>
+                <option value="audit">审计核数</option>
+                <option value="accounting">会计理账</option>
+                <option value="tax">税务申报</option>
+                <option value="company">公司注册</option>
+                <option value="secretary">公司秘书</option>
+                <option value="other">其他</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">您的留言 *</label>
+              <textarea id="message" name="message" placeholder="请简要描述您的需求或问题..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%;">发送查询</button>
+          </form>
+          <p id="form-success" style="display:none; margin-top:16px; color:#27ae60; font-weight:600; text-align:center;">
+            ✅ 感谢您的查询！我们将在1个工作日内与您联系。
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand-icon">卓</div>
+        <p>卓信会计师事务所有限公司是香港会计师公会认可的注册执业会计师，为企业及个人提供专业的会计、审计及税务服务。</p>
+      </div>
+      <div class="footer-col">
+        <h4>快速导航</h4>
+        <ul>
+          <li><a href="/tc/index.html">首页</a></li>
+          <li><a href="/tc/about.html">关于我们</a></li>
+          <li><a href="/tc/services.html">服务</a></li>
+          <li><a href="/tc/contact.html">联系我们</a></li>
+          <li><a href="/admin/index.html">管理后台</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>主要服务</h4>
+        <ul>
+          <li><a href="/tc/services.html">审计核数</a></li>
+          <li><a href="/tc/services.html">会计理账</a></li>
+          <li><a href="/tc/services.html">税务申报</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>联系方式</h4>
+        <div class="footer-contact-item">
+          <span class="icon">📞</span>
+          <a href="tel:+85212345678" id="footer-phone">(852) 1234-5678</a>
+        </div>
+        <div class="footer-contact-item">
+          <span class="icon">✉️</span>
+          <a href="mailto:info@zhuoxincpa.com" id="footer-email">info@zhuoxincpa.com</a>
+        </div>
+        <div class="footer-contact-item">
+          <span class="icon">💬</span>
+          <a href="https://wa.me/85212345678" id="footer-whatsapp" target="_blank" rel="noopener">WhatsApp 咨询</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>版权所有 © 2025 卓信会计师事务所有限公司 保留所有权利。</span>
+      <span>Powered by Decap CMS</span>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById("enquiry-form").style.display = "none";
+      document.getElementById("form-success").style.display = "block";
+    }
+  </script>
+</body>
+</html>

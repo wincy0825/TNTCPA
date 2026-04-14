@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>卓信会计师事务所 — 专业会计·审计·税务服务</title>
+  <meta name="description" content="卓信会计师事务所提供专业的审计核数、会计理账、税务申报及公司注册服务，是您最可信赖的商业伙伴。" />
+  <script>
+    // Redirect to appropriate language version based on user preference or browser language
+    (function() {
+      // Check if user has a saved language preference
+      const savedLang = localStorage.getItem('preferred-language');
+      
+      if (savedLang === 'en') {
+        window.location.href = '/en/index.html';
+        return;
+      } else if (savedLang === 'zh') {
+        window.location.href = '/tc/index.html';
+        return;
+      }
+      
+      // If no saved preference, detect browser language
+      const browserLang = navigator.language || navigator.userLanguage;
+      
+      // Check if browser language is English
+      if (browserLang.startsWith('en')) {
+        localStorage.setItem('preferred-language', 'en');
+        window.location.href = '/en/index.html';
+      } else {
+        // Default to Chinese (Traditional Chinese or Simplified Chinese)
+        localStorage.setItem('preferred-language', 'zh');
+        window.location.href = '/tc/index.html';
+      }
+    })();
+  </script>
+</head>
+<body>
+  <!-- Fallback content in case JavaScript is disabled -->
+  <noscript>
+    <p>Please enable JavaScript to access this website.</p>
+    <p style="margin-top: 20px;">
+      <a href="/tc/index.html">中文版本</a> | <a href="/en/index.html">English Version</a>
+    </p>
+  </noscript>
+</body>
+</html>
