@@ -1,42 +1,26 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>卓信会计师事务所 — 专业会计·审计·税务服务</title>
-  <meta name="description" content="卓信会计师事务所提供专业的审计核数、会计理账、税务申报及公司注册服务，是您最可信赖的商业伙伴。" />
+  <meta charset="utf-8">
+  <title>Redirecting...</title>
   <script>
     (function() {
       var basePath = '/TNTCPA';
       var savedLang = localStorage.getItem('preferred-language');
-      
       if (savedLang === 'en') {
         window.location.href = basePath + '/en/index.html';
-        return;
       } else if (savedLang === 'zh') {
         window.location.href = basePath + '/tc/index.html';
-        return;
-      }
-      
-      var browserLang = navigator.language || navigator.userLanguage;
-      
-      if (browserLang.startsWith('en')) {
-        localStorage.setItem('preferred-language', 'en');
-        window.location.href = basePath + '/en/index.html';
       } else {
-        localStorage.setItem('preferred-language', 'zh');
-        window.location.href = basePath + '/tc/index.html';
+        var browserLang = navigator.language || navigator.userLanguage;
+        if (browserLang.startsWith('en')) {
+          window.location.href = basePath + '/en/index.html';
+        } else {
+          window.location.href = basePath + '/tc/index.html';
+        }
       }
     })();
   </script>
 </head>
-<body>
-  <noscript>
-    <p>Please enable JavaScript to access this website.</p>
-    <p style="margin-top: 20px;">
-      <a href="/TNTCPA/tc/index.html">中文版本</a> | 
-      <a href="/TNTCPA/en/index.html">English Version</a>
-    </p>
-  </noscript>
-</body>
+<body>Loading...</body>
 </html>
