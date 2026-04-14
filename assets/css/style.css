@@ -302,6 +302,15 @@ img {
   transform: translateY(0);
 }
 
+/* 僅針對 Hero 區塊內的按鈕，重置 margin-left 並添加對稱間距 */
+.hero-content .btn {
+  margin: 0 6px;  /* 兩個按鈕左右對稱間距 */
+}
+
+.hero-content .btn-outline {
+  margin-left: 0;  /* 覆蓋原有的 margin-left: 12px */
+}
+
 /* ============================================================
    Section Shared
    ============================================================ */
