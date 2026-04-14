@@ -282,22 +282,20 @@ img {
 }
 
 .btn-outline {
-   background: #0066cc;
+  background: transparent;
   color: #fff;
-  border-color: #0066cc;
-  box-shadow: 0 4px 12px rgba(0,102,204,0.25)
+  border-color: rgba(255,255,255,0.6);
+  margin-left: 12px;
 }
 
 .btn-outline:hover {
-  background: #0052a3;
-  border-color: #0052a3;
+  background: rgba(255,255,255,0.1);
+  border-color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,102,204,0.35);
 }
 
 .btn-outline:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(0,102,204,0.2);
 }
 
 /* ============================================================
