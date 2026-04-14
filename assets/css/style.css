@@ -918,18 +918,39 @@ img {
     gap: 20px;
   }
 
+  /* 導航選單：預設隱藏，點擊後顯示 */
   .navbar-nav {
     display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: #001f3f;
+    flex-direction: column;
+    padding: 20px;
+    gap: 16px;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
 
+  .navbar-nav.open {
+    display: flex;
+  }
+
+  /* 漢堡圖示在手機版顯示 */
   .navbar-hamburger {
     display: flex;
   }
 
+  /* 語言切換按鈕：在手機版顯示（原本是隱藏的） */
   .lang-switcher {
-    display: none;
+    display: flex;
+    margin-left: auto;
+    padding-left: 20px;
+    border-left: 1px solid rgba(255,255,255,0.1);
   }
 
+  /* 以下是你原有的其他響應式規則，請確保全部保留 */
   .about-grid {
     grid-template-columns: 1fr;
     gap: 40px;
@@ -963,23 +984,5 @@ img {
     margin-left: 0;
     margin-top: 12px;
     display: block;
-  }
-}
-
-@media (max-width: 480px) {
-  .section {
-    padding: 60px 16px;
-  }
-
-  .section-header {
-    margin-bottom: 40px;
-  }
-
-  .why-choose-us {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-grid {
-    grid-template-columns: 1fr;
   }
 }
