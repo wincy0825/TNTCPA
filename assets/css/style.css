@@ -196,9 +196,7 @@ img {
 /* ============================================================
    Hero Banner
    ============================================================ */
-/* ============================================================
-   Hero Banner
-   ============================================================ */
+
 .hero {
   position: relative;
   min-height: 520px;
@@ -225,8 +223,6 @@ img {
   z-index: 1;
   padding: 60px 24px;
   max-width: 800px;
-  margin: 0 auto;          /* 水平置中 */
-  text-align: center;      /* 文字置中 */
 }
 
 .hero-content .subtitle {
@@ -248,7 +244,7 @@ img {
 
 .hero-content p {
   font-size: 17px;
-  color: #e0e8ff;          /* 修改：更亮的顏色，提高對比度 */
+  color: #b3d9ff;
   max-width: 600px;
   margin: 0 auto 40px;
 }
@@ -289,7 +285,7 @@ img {
   background: transparent;
   color: #fff;
   border-color: rgba(255,255,255,0.6);
-  margin-left: 12px;       /* 保持與主按鈕間距 */
+  margin-left: 12px;
 }
 
 .btn-outline:hover {
@@ -301,16 +297,6 @@ img {
 .btn-outline:active {
   transform: translateY(0);
 }
-
-/* 僅針對 Hero 區塊內的按鈕，重置 margin-left 並添加對稱間距 */
-.hero-content .btn {
-  margin: 0 6px;  /* 兩個按鈕左右對稱間距 */
-}
-
-.hero-content .btn-outline {
-  margin-left: 0;  /* 覆蓋原有的 margin-left: 12px */
-}
-
 /* ============================================================
    Section Shared
    ============================================================ */
