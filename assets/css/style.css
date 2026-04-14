@@ -940,7 +940,7 @@ img {
 
   /* 漢堡圖示在手機版顯示 */
   .navbar-hamburger {
-    display: flex;
+    display: flex; !important;
   }
 
   /* 語言切換按鈕：在手機版顯示（原本是隱藏的） */
