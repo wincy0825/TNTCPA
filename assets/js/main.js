@@ -3,13 +3,28 @@ document.addEventListener("DOMContentLoaded", function () {
   const hamburger = document.querySelector(".navbar-hamburger");
   const nav = document.querySelector(".navbar-nav");
 
+  // 漢堡選單點擊事件（同時支援 click 和 touchstart）
   if (hamburger && nav) {
-    hamburger.addEventListener("click", function () {
+    const toggleMenu = function(e) {
+      e.preventDefault();
+      e.stopPropagation();
       nav.classList.toggle("open");
+      // 可選：改變漢堡圖示外觀（例如旋轉）
+      hamburger.classList.toggle("active");
+    };
+    hamburger.addEventListener("click", toggleMenu);
+    hamburger.addEventListener("touchstart", toggleMenu); // 加強行動裝置
+
+    // 點擊選單內的任何連結後自動關閉選單（行動裝置友好）
+    nav.querySelectorAll("a").forEach(function(link) {
+      link.addEventListener("click", function() {
+        nav.classList.remove("open");
+        if (hamburger) hamburger.classList.remove("active");
+      });
     });
   }
 
-  // Mark active nav link based on current page (considering base path)
+  // 標記當前頁面對應的導航連結為 active 狀態
   const currentPath = window.location.pathname;
   let currentPage = currentPath.split('/').pop() || "index.html";
   document.querySelectorAll(".navbar-nav a").forEach(function (link) {
@@ -19,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Language switcher functionality
+  // 語言切換功能
   const langSwitcher = document.querySelector(".lang-switcher");
   if (langSwitcher) {
     langSwitcher.addEventListener("click", function (e) {
@@ -33,22 +48,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Initialize language switcher state
+  // 初始化語言切換器的 active 狀態
   updateLanguageSwitcherState();
 });
 
 /**
- * Switch language and navigate to the corresponding page
- * Works with subdirectory base path /TNTCPA/
+ * 切換語言並導航到對應頁面
+ * 適用於子目錄結構 /TNTCPA/
  */
 function switchLanguage(lang) {
-  // Save language preference to localStorage
+  // 儲存使用者偏好
   localStorage.setItem("preferred-language", lang);
 
   const basePath = '/TNTCPA';
   let currentPath = window.location.pathname;
 
-  // Remove basePath from currentPath if present
+  // 移除 basePath 以獲得相對路徑
   let relativePath = currentPath.replace(basePath, '');
   if (relativePath === '' || relativePath === '/') {
     relativePath = '/tc/index.html';
@@ -61,18 +76,17 @@ function switchLanguage(lang) {
     targetPath = relativePath.replace('/en/', '/tc/');
   }
 
-  // If no language prefix in path (fallback)
+  // 如果路徑中沒有語言前綴（備用）
   if (!targetPath.includes('/en/') && !targetPath.includes('/tc/')) {
     targetPath = lang === 'en' ? '/en/index.html' : '/tc/index.html';
   }
 
-  // Ensure the path starts with basePath
-  let newUrl = basePath + targetPath;
-  window.location.href = newUrl;
+  // 導航到目標頁面
+  window.location.href = basePath + targetPath;
 }
 
 /**
- * Update the language switcher active state based on current page
+ * 更新語言切換按鈕的 active 狀態
  */
 function updateLanguageSwitcherState() {
   const currentPath = window.location.pathname;
