@@ -1,4 +1,4 @@
-/// Mobile hamburger menu toggle
+// Mobile hamburger menu toggle
 document.addEventListener("DOMContentLoaded", function () {
   const hamburger = document.querySelector(".navbar-hamburger");
   const nav = document.querySelector(".navbar-nav");
@@ -11,11 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Mark active nav link based on current page (considering base path)
   const currentPath = window.location.pathname;
-  // Extract the part after /TNTCPA/ (or just use the full path)
   let currentPage = currentPath.split('/').pop() || "index.html";
   document.querySelectorAll(".navbar-nav a").forEach(function (link) {
     const href = link.getAttribute("href");
-    if (href && (href === currentPage || href === currentPath || href.endsWith(currentPage))) {
+    if (href && (href === currentPage || href.endsWith(currentPage))) {
       link.classList.add("active");
     }
   });
@@ -25,7 +24,9 @@ document.addEventListener("DOMContentLoaded", function () {
   if (langSwitcher) {
     langSwitcher.addEventListener("click", function (e) {
       e.preventDefault();
-      const targetLang = e.target.getAttribute("data-lang");
+      const targetLink = e.target.closest('a');
+      if (!targetLink) return;
+      const targetLang = targetLink.getAttribute("data-lang");
       if (targetLang) {
         switchLanguage(targetLang);
       }
@@ -41,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
  * Works with subdirectory base path /TNTCPA/
  */
 function switchLanguage(lang) {
+  // Save language preference to localStorage
   localStorage.setItem("preferred-language", lang);
 
   const basePath = '/TNTCPA';
@@ -48,9 +50,10 @@ function switchLanguage(lang) {
 
   // Remove basePath from currentPath if present
   let relativePath = currentPath.replace(basePath, '');
-  if (relativePath === '') relativePath = '/tc/index.html'; // fallback
+  if (relativePath === '' || relativePath === '/') {
+    relativePath = '/tc/index.html';
+  }
 
-  // Determine current language and target page
   let targetPath = '';
   if (lang === 'en') {
     targetPath = relativePath.replace('/tc/', '/en/');
@@ -58,7 +61,7 @@ function switchLanguage(lang) {
     targetPath = relativePath.replace('/en/', '/tc/');
   }
 
-  // If no language prefix in path, assume we are at root or default to index
+  // If no language prefix in path (fallback)
   if (!targetPath.includes('/en/') && !targetPath.includes('/tc/')) {
     targetPath = lang === 'en' ? '/en/index.html' : '/tc/index.html';
   }
