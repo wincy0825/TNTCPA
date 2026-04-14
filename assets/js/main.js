@@ -1,5 +1,5 @@
 // ============================================================
-// 网站交互脚本：移动端菜单、语言切换（基于 URL 路径替换）
+// 网站交互脚本：移动端菜单、语言切换（基于 URL 路径替换，通用版）
 // ============================================================
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -40,62 +40,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function switchLanguage(lang) {
   // 获取当前完整 URL（路径部分）
-  let currentPath = window.location.pathname;
-  // 获取当前页面文件名（例如 index.html, contact.html）
-  let pageName = currentPath.split("/").pop();
-  if (!pageName || pageName === "" || pageName.includes("?")) {
-    pageName = "index.html";
-  }
+  let currentUrl = window.location.href;
+  let newUrl = currentUrl;
 
-  // 判断当前是否在英文页面（路径中是否包含 /en/）
-  const isEnglish = currentPath.includes("/en/");
+  // 判断当前是否在英文页面（URL 中是否包含 /en/）
+  const isEnglish = currentUrl.includes("/en/");
 
-  // 如果已经在目标语言，只更新按钮状态
+  // 如果已经在目标语言，只更新按钮样式
   if ((lang === "en" && isEnglish) || (lang === "zh" && !isEnglish)) {
     updateLanguageSwitcherState();
     return;
   }
 
-  let newPath = "";
-
   if (lang === "en") {
-    // 切换到英文：在根路径后插入 /en/
-    // 获取当前路径的根部分（去掉最后的文件名和可能的 /en/）
-    let rootPath = currentPath;
-    // 如果当前已经是中文页面（没有 /en/），直接构造 /en/文件名
-    if (!isEnglish) {
-      // 移除末尾的文件名，得到目录路径（可能为空或 /）
-      let dirPath = currentPath.substring(0, currentPath.lastIndexOf('/'));
-      if (dirPath === "") dirPath = "/";
-      newPath = dirPath + "/en/" + pageName;
+    // 切换到英文：在域名后的第一个斜杠后插入 "en/"
+    // 例如：https://xxx.netlify.app/ -> https://xxx.netlify.app/en/
+    // 注意：如果已经是 /en/ 则不会执行到这里
+    const parts = currentUrl.split("/");
+    // 找到协议后的第一个空字符串位置（即域名后）
+    let insertIndex = 3; // 例如 ["https:", "", "xxx.netlify.app", ...]
+    // 但更简单的方法：在域名后、路径前插入 en/
+    const domainEndIndex = currentUrl.indexOf("/", 8); // 从第8个字符开始找第一个斜杠
+    if (domainEndIndex !== -1) {
+      newUrl = currentUrl.slice(0, domainEndIndex + 1) + "en/" + currentUrl.slice(domainEndIndex + 1);
     } else {
-      // 理论上不会进来，但保留逻辑
-      newPath = currentPath.replace(/\/en\//, "/") + "?error";
+      // 如果没有路径（只有域名），直接加 /en/
+      newUrl = currentUrl + "/en/";
     }
-    // 处理根路径特殊情况：如果 dirPath 是 "/"，结果会是 "//en/index.html"
-    newPath = newPath.replace(/\/\/+/g, "/");
   } else {
-    // 切换到中文：移除 /en/ 部分
-    if (isEnglish) {
-      newPath = currentPath.replace(/\/en\//, "/");
-      // 如果替换后变成 /index.html 或 /contact.html 等
-    } else {
-      // 已经是中文，不跳转（前面已拦截）
-      return;
-    }
+    // 切换到中文：移除 /en/
+    newUrl = currentUrl.replace("/en/", "/");
   }
 
-  // 最终清理：确保路径不以双斜杠开头，且不为空
-  newPath = newPath.replace(/\/\/+/g, "/");
-  if (newPath === "") newPath = "/";
-
-  window.location.href = newPath;
+  // 避免出现双斜杠
+  newUrl = newUrl.replace(/\/\//g, "/");
+  // 跳转
+  window.location.href = newUrl;
 }
 
 function updateLanguageSwitcherState() {
   const langSwitcher = document.querySelector(".lang-switcher");
   if (!langSwitcher) return;
-  const isEnglish = window.location.pathname.includes("/en/");
+  const isEnglish = window.location.href.includes("/en/");
   const currentLang = isEnglish ? "en" : "zh";
   document.querySelectorAll(".lang-switcher a").forEach(function (link) {
     const lang = link.getAttribute("data-lang");
