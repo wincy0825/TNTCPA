@@ -282,15 +282,15 @@ img {
 }
 
 .btn-outline {
-  background: transparent;
+  background: #0066cc;
   color: #fff;
-  border-color: rgba(255,255,255,0.6);
+  border-color: #0066cc;
   margin-left: 12px;
 }
 
 .btn-outline:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.6);
+  background: #0052a3;
+  border-color: #0052a3;
   transform: translateY(-2px);
 }
 
