@@ -249,6 +249,11 @@ img {
   margin: 0 auto 40px;
 }
 
+/* 👇 新增這一段 */
+.hero-content .btn {
+  margin: 0 6px;
+}
+
 .btn {
   display: inline-block;
   padding: 14px 36px;
@@ -285,7 +290,7 @@ img {
   background: transparent;
   color: #fff;
   border-color: rgba(255,255,255,0.6);
-  margin-left: 12px;
+  margin-left: 0;
 }
 
 .btn-outline:hover {
