@@ -36,56 +36,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /**
  * Switch language and navigate to the corresponding page
- * Works correctly on both local development and Netlify deployment
+ * Works correctly on domain root, subfolders, GitHub Pages, and Netlify
  */
 function switchLanguage(lang) {
   // Save language preference to localStorage
   localStorage.setItem("preferred-language", lang);
 
   // Get current pathname
-  const currentPath = window.location.pathname;
-  
-  // Determine if currently on English or Chinese version
-  const isEnglish = currentPath.includes("/en/");
-  
-  // If already on the target language, just update switcher state
+  let currentPath = window.location.pathname;
+
+  // Detect base path (e.g., /repository-name/ if not at domain root)
+  let basePath = "";
+  const match = currentPath.match(/^(\/[^\/]+)\//);
+  if (match && !match[1].includes("en") && !match[1].includes(".html")) {
+    basePath = match[1];
+  }
+
+  // Remove base path from currentPath for processing
+  let pathWithoutBase = currentPath;
+  if (basePath && currentPath.startsWith(basePath)) {
+    pathWithoutBase = currentPath.substring(basePath.length);
+  }
+
+  // Determine if currently on English version
+  const isEnglish = pathWithoutBase.startsWith("/en/");
+
+  // If already on target language, just update UI
   if ((lang === "en" && isEnglish) || (lang === "zh" && !isEnglish)) {
     updateLanguageSwitcherState();
     return;
   }
 
-  // Extract the page name from the current path
-  // Handle cases like:
-  // - /index.html -> index.html
-  // - /services.html -> services.html
-  // - /contact.html -> contact.html
-  // - /en/index.html -> index.html
-  // - /en/services.html -> services.html
-  // - /en/contact.html -> contact.html
-  // - / -> index.html
-  // - /en/ -> index.html
-  
-  let pathSegments = currentPath.split("/").filter(segment => segment && segment !== "en");
-  let pageName = pathSegments[pathSegments.length - 1] || "index.html";
-  
-  // Ensure pageName has .html extension
-  if (pageName && !pageName.endsWith(".html")) {
-    pageName = pageName + ".html";
-  }
-  
-  // If pageName is empty or just a domain, default to index.html
-  if (!pageName || pageName === ".html") {
-    pageName = "index.html";
+  // Extract page name
+  let pageName = "index.html";
+  if (pathWithoutBase !== "/" && pathWithoutBase !== "") {
+    let parts = pathWithoutBase.split("/").filter(p => p && p !== "en");
+    let lastPart = parts.pop();
+    if (lastPart && lastPart.endsWith(".html")) {
+      pageName = lastPart;
+    } else if (lastPart && !lastPart.includes(".")) {
+      pageName = lastPart + ".html";
+    }
   }
 
-  // Construct the new path based on target language
-  let newPath = "";
+  // Build new path
+  let newPath;
   if (lang === "en") {
-    // Switch to English version
-    newPath = "/en/" + pageName;
+    newPath = basePath + "/en/" + pageName;
   } else {
-    // Switch to Chinese version
-    newPath = "/" + pageName;
+    newPath = basePath + "/" + pageName;
   }
 
   // Navigate to the new language version
@@ -99,10 +98,22 @@ function updateLanguageSwitcherState() {
   const langSwitcher = document.querySelector(".lang-switcher");
   if (!langSwitcher) return;
 
-  // Determine current language from pathname
-  const currentLang = window.location.pathname.includes("/en/") ? "en" : "zh";
+  let currentPath = window.location.pathname;
 
-  // Update active state for all language switcher links
+  // Detect base path
+  let basePath = "";
+  const match = currentPath.match(/^(\/[^\/]+)\//);
+  if (match && !match[1].includes("en") && !match[1].includes(".html")) {
+    basePath = match[1];
+  }
+
+  let pathWithoutBase = currentPath;
+  if (basePath && currentPath.startsWith(basePath)) {
+    pathWithoutBase = currentPath.substring(basePath.length);
+  }
+
+  const currentLang = pathWithoutBase.startsWith("/en/") ? "en" : "zh";
+
   document.querySelectorAll(".lang-switcher a").forEach(function (link) {
     const lang = link.getAttribute("data-lang");
     if (lang === currentLang) {
